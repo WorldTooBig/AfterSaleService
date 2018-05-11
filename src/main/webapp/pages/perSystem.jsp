@@ -178,7 +178,7 @@
 		fixDivToggle();
 		var strs = "";
 		strs += "<h2>角色名：" + rname + "</h2>";
-		$.post("roleAction_findRoleAndPrivilegeByRoleName", "role.rname=rname", function(data) {
+		$.post("roleAction_findRoleAndPrivilegeByRoleName", "role.rname=" + rname, function(data) {
 			strs += "<form action='' method='post'>";
 			$.each(data.list, function(i, v) {
 				strs += "<input type='checkbox' name='pno'/>" + v.pname + "<br />";

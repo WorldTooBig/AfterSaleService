@@ -68,7 +68,7 @@ public class RoleServiceImpl implements IRoleService {
 	 * @return
 	 */
 	public List findRoleAndPrivilegeByRoleName(Role role) {
-		String hql = "select rp.rpno, p.pname from RolePrivilege rp left join rp.role r left join rp.privilege p where r.rno = " + role.getRname() + " order by r.rno";
+		String hql = "select rp.rpno, p.pname from RolePrivilege rp left join rp.role r left join rp.privilege p where r.rname = '" + role.getRname() + "' order by r.rno";
 		return roleDao.queryHql(hql);
 	}
 
