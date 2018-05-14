@@ -25,6 +25,10 @@ public interface IRoleDao {
 	 */
 	public List queryHql(String hql);
 	
+	/**
+	 * ÷¥––sql”Ôæ‰«“∑µªÿRole∑∫–ÕList
+	 * @return
+	 */
 	public List<Role> queryRoleSql(String sql);
 	
 }
