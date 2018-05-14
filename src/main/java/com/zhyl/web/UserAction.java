@@ -1,5 +1,6 @@
 package com.zhyl.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhyl.entity.Privilege;
+import com.zhyl.entity.Role;
 import com.zhyl.entity.User;
 import com.zhyl.service.IUserService;
 
@@ -21,8 +23,9 @@ public class UserAction {
 	
 	private User user;
 	
+	private List list;
 	private List<User> userList;
-	private List<Privilege> privilegeList;
+	private List<Role> roleList;
 	private String errorInfo;
 	
 	/**
@@ -30,12 +33,10 @@ public class UserAction {
 	 * @return
 	 */
 	public String userLogin() {
-		privilegeList = userService.userLogin(user);
-		if(privilegeList != null) {
-			//获取到用户信息
-			ActionContext.getContext().getSession().put("user_login", user);
+		roleList = userService.userLogin(user);
+		if(roleList != null) {
 			//成功则获取该用户拥有的权限
-			ActionContext.getContext().getSession().put("user_privilege", privilegeList);
+			ActionContext.getContext().getSession().put("user_role", roleList);
 			return "index";
 		}
 		ActionContext.getContext().getSession().put("login_lose", "用户名或密码错误");
@@ -62,7 +63,33 @@ public class UserAction {
 		userList = userService.findUserList();
 		return "findUserList";
 	}
+	
+	/**
+	 * 查询所有用户和它的角色
+	 * @return
+	 */
+	public String findUserAndRoleList() {
+		list = userService.findUserAndRoleList();
+		return "findUserAndRoleList";
+	}
+	
+	/**
+	 * 根据用户查询该用户的角色
+	 * @return
+	 */
+	public String findUserAndROleByUserList() {
+		list = new ArrayList();
+		userList = userService.findUserList();
+		for (User user : userList) {
+			List l = new ArrayList();
+			l.add(user);
+			l.add(userService.findUserAndRoleByUserList(user));
+			list.add(l);
+		}
+		return "findUserAndROleByUserList";
+	}
 
+	
 	public User getUser() {
 		return user;
 	}
@@ -71,12 +98,20 @@ public class UserAction {
 		this.user = user;
 	}
 	
-	public List<Privilege> getPrivilegeList() {
-		return privilegeList;
+	public List getList() {
+		return list;
 	}
 
-	public void setPrivilegeList(List<Privilege> privilegeList) {
-		this.privilegeList = privilegeList;
+	public void setList(List list) {
+		this.list = list;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 
 	public void setUserService(IUserService userService) {

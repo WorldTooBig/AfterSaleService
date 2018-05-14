@@ -9,16 +9,14 @@
 	<constant name="struts.action.extension" value="action,do,,"/>
 	<constant name="struts.ui.theme" value="simple"/>
 
-	<package name="ylzh-privilege" extends="json-default">
+	<package name="ylzh-userRoleAction" extends="json-default">
 		<global-allowed-methods>regex:.*</global-allowed-methods>
-		<action name="privilegeAction_*" method="{1}" class="privilegeAction">
-			<result name="addPrivilege" type="redirect">/pages/perSystem.jsp</result>
-            <result name="findPrivilegeList" type="json">
-                <param name="includeProperties">privilegeList.*</param>
+		<action name="userRoleAction_*" method="{1}" class="userRoleAction">
+			<result name="deleteUserRole" type="redirect">/pages/perSystem.jsp</result>
+            <result name="findRoleNoBindingListByUser" type="json">
+                <param name="includeProperties">roleList.*</param>
             </result>
-            <result name="findPrivilegeNoBindingListByRole" type="json">
-                <param name="includeProperties">privilegeList.*</param>
-            </result>
+			<result name="addUserRole" type="redirect">/pages/perSystem.jsp</result>
 		</action>
 	</package>
 </struts>

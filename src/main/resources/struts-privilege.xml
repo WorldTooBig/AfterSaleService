@@ -16,6 +16,9 @@
             <result name="findPrivilegeList" type="json">
                 <param name="includeProperties">privilegeList.*</param>
             </result>
+            <result name="findPrivilegeNoBindingListByRole" type="json">
+                <param name="includeProperties">privilegeList.*</param>
+            </result>
 		</action>
 	</package>
 </struts>

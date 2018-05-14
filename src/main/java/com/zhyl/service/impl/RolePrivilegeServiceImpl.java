@@ -25,19 +25,31 @@ public class RolePrivilegeServiceImpl implements IRolePrivilegeService {
 	}
 
 
-
+	/**
+	 * 查询所有角色权限表信息
+	 * @return
+	 */
 	public List<RolePrivilege> findRolePrivilege() {
 		String hql = "from RolePrivilege";
 		return rolePrivilegeDao.queryRolePrivilegeHql(hql);
 	}
 
+	/**
+	 * 根据ID删除该角色权限信息
+	 * @param rolePrivilege
+	 * @return
+	 */
 	public boolean deleteRolePrivelegeById(RolePrivilege rolePrivilege) {
 		return rolePrivilegeDao.deleteRolePrivilege(rolePrivilege);
 	}
-	
-	public List findPrivilegeNoBindingListByRole() {
-		String hql = "";
-		return rolePrivilegeDao.queryRolePrivilegeHql(hql);
+
+	/**
+	 * 为角色绑定权限
+	 * @param rolePrivilege
+	 * @return
+	 */
+	public boolean addRolePrivilege(RolePrivilege rolePrivilege) {
+		return rolePrivilegeDao.addRolePrivilege(rolePrivilege);
 	}
 
 }

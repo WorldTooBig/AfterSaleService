@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.zhyl.entity.Privilege;
+import com.zhyl.entity.Role;
 import com.zhyl.service.IPrivilegeService;
 
 @Controller("privilegeAction")
@@ -18,10 +19,10 @@ public class PrivilegeAction {
 	@Resource(name = "privilegeService")
 	private IPrivilegeService privilegeService;
 
+	private Role role;
 	private Privilege privilege;
 	private List<Privilege> privilegeList;
 	private String errorInfo;
-	private int[] rpno;
 	
 	/**
 	 * 添加权限
@@ -41,12 +42,16 @@ public class PrivilegeAction {
 	 */
 	public String findPrivilegeList() {
 		privilegeList = privilegeService.findPrivilegeLst();
-		ActionContext.getContext().put("privilegeList", privilegeList);
+//		ActionContext.getContext().put("privilegeList", privilegeList);
 		return "findPrivilegeList";
 	}
-	
+
+	/**
+	 * 根据角色id查询该角色未拥有的权限
+	 * @return
+	 */
 	public String findPrivilegeNoBindingListByRole() {
-		
+		privilegeList = privilegeService.findPrivilegeNoBindingListByRole(role);
 		return "findPrivilegeNoBindingListByRole";
 	}
 	
@@ -57,6 +62,14 @@ public class PrivilegeAction {
 
 	public Privilege getPrivilege() {
 		return privilege;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setPrivilege(Privilege privilege) {

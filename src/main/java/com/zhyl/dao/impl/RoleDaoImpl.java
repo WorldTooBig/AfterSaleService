@@ -49,4 +49,9 @@ public class RoleDaoImpl extends BaseDao implements IRoleDao {
 		return null;
 	}
 
+	public List<Role> queryRoleSql(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

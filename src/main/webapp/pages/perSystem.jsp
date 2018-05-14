@@ -11,13 +11,7 @@
 </head>
 <body>
 
-	<h2>${user_login.unum }</h2>
-	<h3>${user_privilege.size() }</h3>
-	<s:iterator var="p" value="#session.user_privilege" status="i">
-		<s:iterator var="s" value="#p">
-		${s }<hr/>
-		</s:iterator>
-	</s:iterator>
+	<h2>${user_login.uname }</h2>
 
 
 <div style="float: left; width: 100%">
@@ -54,45 +48,16 @@
 	<hr>
 	<div id="userDiv">
 		<h2>用户信息</h2>
-		<%-- <a href="${pageContext.request.contextPath}/userAction_findUserList">查询用户信息</a> --%>
 		<table border=1>
 			<tr>
 				<th>序号</th><th>用户名</th><th>密码</th><th>真实名</th><th>部门</th>
 			</tr>
-			<%-- <s:iterator var="user" value="#userList" status="itm">
-			<tr>
-				<td>${itm.count }</td><td>${user.unum }</td><td>${user.upwd }</td><td>${user.uname }</td><td>${user.udept }</td>
-			</tr>
-			</s:iterator> --%>
 		</table>
 	</div>
 	
 	<div id="roleDiv">
 		<h2>角色信息</h2>
-		<%-- <a href="${pageContext.request.contextPath}/roleAction_findRoleAndPrivilege">查询角色信息</a> --%>
 		<ul>
-			<%-- <c:forEach var="r" items="${map }">
-				<li>${r.key.rname }
-					<ol>
-					<c:forEach var="v" items="${r.value }">
-						<li>${v[1] }-------------------<a href="${pageContext.request.contextPath}/rolePrivilegeAction_deleteRolePrivilegeById?rolePrivilege.rpno=${v[0] }">解绑</a></li>
-					</c:forEach>
-					</ol>
-				</li>	
-			</c:forEach> --%>
-			<%-- <s:iterator var="r" value="${list }" status="itm">
-			<li>${r.rname }
-				<ol>
-					<s:iterator var="privilege" value="#r">
-					<li>${privilege.pname }
-					<c:if test="${!empty privilege.pname}">
-					${privilege.pname }
-					</c:if>
-					</li>
-					</s:iterator>
-				</ol>
-			</li>
-			</s:iterator> --%>
 		</ul>
 	</div>
 	<br/>
@@ -100,16 +65,13 @@
 	<hr>
 	<div id="perDiv">
 		<h2>权限信息</h2>
-		<%-- <a href="${pageContext.request.contextPath}/privilegeAction_findPrivilegeList">查询权限信息</a> --%>
 		<ul>
-			<%-- <s:iterator var="per" value="#privilegeList" status="num">
-			<li>${per.pname }</li>
-			</s:iterator> --%>
 		</ul>
 	</div>
 	
-	<div id="fixDiv" style="position: fixed; top: 20%; left: 35%; width: 30%; height: 50%; background-color: RGBA(0,0,0,0.5);">
-	
+	<div id="fixDiv" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;">
+		<div style="position: fixed; top: 20%; left: 35%; width: 30%; height: 50%; background-color: RGBA(0,0,0,0.5);">
+		</div>
 	</div>
 	
 </body>
@@ -124,44 +86,59 @@
 		fixDivToggle();
 	}
 	
+	//获得所有用户信息
 	function userFind() {
-		$.post("userAction_findUserList", null, function(data){
+		$.post("userAction_findUserAndROleByUserList", null, function(data){
 			$("#userDiv table tr:not(:first)").remove();
 			var strs = "";
-			$.each(data.userList, function(i, v){
+			$.each(data.list, function(i, val){
 				strs += "<tr>";
 				strs += "<td>" + (++i) + "</td>";
-				strs += "<td>" + v.unum + "</td>";
-				strs += "<td>" + v.upwd + "</td>";
-				strs += "<td>" + v.uname + "</td>";
-				strs += "<td>" + v.udept + "</td>";
+				strs += "<td>" + val[0].unum + "</td>";
+				strs += "<td>" + val[0].upwd + "</td>";
+				strs += "<td>" + val[0].uname + "</td>";
+				strs += "<td>" + val[0].udept + "</td>";
+				strs += "</tr>";
+				strs += "<tr>";
+				strs += "<td colspan=5 style='padding-left:20px;'>";
+				$.each(val[1], function(j, value) {
+					var v = value.toString().split(",");
+					strs += ++j + "." + v[1] + "------------------<a href='\${pageContext.request.contextPath}/userRoleAction_deleteUserRole?userRole.urno=" + v[0] + "'>解绑</a><br />";
+				});
+				strs += "<input type='button' value='绑定角色' onclick=bindingRole('" + val[0].uno + "','" + val[0].uname + "') />";
+				strs += "";
+				strs += "</td>";
 				strs += "</tr>";
 			});
 			$("#userDiv table").append(strs);
 		}, "json");
 	}
 	
+	//获得所有角色信息
 	function roleFind() {
 		$.post("roleAction_findRoleAndPrivilege", null, function(data){
 			$("#roleDiv ul").empty();
 			var strs = "";
-			$.each(data.map, function(key, val){
-				strs += "<li>" + key;
+			$.each(data.list, function(i, v){
+				strs += "<li>" + v[0].rname;
 				strs += "<ol>";
-				$.each(val, function(i, v){
+				$.each(v[1], function(j, value){
+					var val = value.toString().split(",");
 					strs += '<li>';
-					strs += v[1] + '-------------------<a href="\${pageContext.request.contextPath}/rolePrivilegeAction_deleteRolePrivilegeById?rolePrivilege.rpno=' + v[0] + '\">解绑</a>';
+					strs += val[1] + '-------------------<a href="\${pageContext.request.contextPath}/rolePrivilegeAction_deleteRolePrivilegeById?rolePrivilege.rpno=' + val[0] + '\">解绑</a>';
 					strs += "</li>";
 				});
-				strs += "<input type='button' value='绑定权限' onclick=binding('" + key + "') />";
+				strs += "<input type='button' value='绑定权限' onclick=bindingPer('" + v[0].rno + "','" + v[0].rname + "') />";
 				strs += "</ol>";
 				strs += "</li>";
+				
 			});
 			$("#roleDiv ul").append(strs);
 		}, "json");
 		
 	}
 	
+	//获得所有权限信息
 	function perFind() {
 		$.post("privilegeAction_findPrivilegeList", null, function(data) {
 			$("#perDiv ul").empty();
@@ -173,21 +150,46 @@
 		}, "json");
 	}
 	
-	function binding(rname) {
-		$("#fixDiv").empty();
+	//绑定权限
+	function bindingPer(rno, rname) {
+		$("#fixDiv div").empty();
 		fixDivToggle();
-		var strs = "";
-		strs += "<h2>角色名：" + rname + "</h2>";
-		$.post("roleAction_findRoleAndPrivilegeByRoleName", "role.rname=" + rname, function(data) {
-			strs += "<form action='' method='post'>";
-			$.each(data.list, function(i, v) {
-				strs += "<input type='checkbox' name='pno'/>" + v.pname + "<br />";
+		$.post("privilegeAction_findPrivilegeNoBindingListByRole", "role.rno=" + rno, function(data) {
+			var strs = "";
+			strs += "<h2>角色名：" + rname + "</h2>";
+			strs += "<form action='rolePrivilegeAction_addRolePrivilege' method='post'>";
+			strs += "<input type='hidden' name='rolePrivilege.role.rno' value='" + rno + "' />";
+			strs += "<ul>"
+			$.each(data.privilegeList, function(i, v) {
+				strs += "<li><input type='checkbox' name='pno' value='" + v[0] + "' />" + v[1] + "</li>";
 			});
-			strs += "<input type='submit' value='绑定权限'";
-			strs += "</form>";
+			strs += "</ul>"
+			strs += "<br /><input type='submit' value='绑定权限' />";
+			strs += "</form><br />";
+			strs += "<input type='button' value='关闭' onclick='fixDivToggle()' />	";
+			$("#fixDiv div").html(strs);
 		}, "json");
-		strs += "<input type='button' value='关闭' onclick='fixDivToggle'";
-		$("#fixDiv").html();
+	}
+	
+	//绑定角色
+	function bindingRole(uno, uname) {
+		$("#fixDiv div").empty();
+		fixDivToggle();
+		$.post("userRoleAction_findRoleNoBindingListByUser", "user.uno=" + uno, function(data) {
+			var strs = "";
+			strs += "<h2>用户名：" + uname + "</h2>";
+			strs += "<form action='userRoleAction_addUserRole' method='post'>";
+			strs += "<input type='hidden' name='userRole.user.uno' value='" + uno + "' />";
+			strs += "<ul>";
+			$.each(data.roleList, function(i, v) {
+				strs += "<li><input type='checkbox' name='rno' value='" + v[0] + "' />" + v[1] + "</li>";
+			});
+			strs += "</ul>";
+			strs += "<br /><input type='submit' value='绑定角色' />";
+			strs += "</form><br />";
+			strs += "<input type='button' value='关闭' onclick='fixDivToggle()' />";
+			$("#fixDiv div").html(strs);
+		}, "json");
 	}
 	
 	function fixDivToggle() {

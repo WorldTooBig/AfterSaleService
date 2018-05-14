@@ -30,5 +30,14 @@ public class UserDaoImpl extends BaseDao implements IUserDao {
 		return false;
 	}
 
+	public List queryHql(String hql) {
+		try {
+			return getSession().createQuery(hql).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 }

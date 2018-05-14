@@ -2,6 +2,7 @@ D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\fi
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\entity\Role.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\IRoleService.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\web\PrivilegeAction.java
+D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\IUserRoleDao.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\IPrivilegeService.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\IRolePrivilegeService.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\web\RolePrivilegeAction.java
@@ -10,6 +11,7 @@ D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\en
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\web\UserAction.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\impl\RoleServiceImpl.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\impl\UserServiceImpl.java
+D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\IUserRoleService.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\impl\RolePrivilegeDaoImpl.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\web\RoleAction.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\impl\PrivilegeServiceImpl.java
@@ -17,8 +19,11 @@ D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\da
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\impl\RolePrivilegeServiceImpl.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\impl\PrivilegeDaoImpl.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\IUserService.java
+D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\service\impl\UserRoleServiceImpl.java
+D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\impl\UserRoleDaoImpl.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\entity\UserRole.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\impl\RoleDaoImpl.java
+D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\web\UserRoleAction.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\IPrivilegeDao.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\dao\impl\BaseDao.java
 D:\eclipse-workspace\AfterSaleService\AfterSaleService\src\main\java\com\zhyl\entity\RolePrivilege.java

@@ -18,6 +18,9 @@
             <result name="findUserList" type="json">
                 <param name="includeProperties">userList.*</param>
             </result>
+            <result name="findUserAndROleByUserList" type="json">
+                <param name="includeProperties">list.*</param>
+            </result>
 		</action>
 	</package>
 </struts>

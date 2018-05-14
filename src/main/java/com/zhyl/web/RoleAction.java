@@ -25,7 +25,6 @@ public class RoleAction {
 	private Role role;
 	private List<Role> roleList;
 	private List list;
-	private Map<String, List> map;
 	
 	private String errorInfo;
 	
@@ -56,14 +55,22 @@ public class RoleAction {
 	 * @return
 	 */
 	public String findRoleAndPrivilege() {
-		map = new HashMap();
+		list = new ArrayList();
 		roleList = roleService.findRoleList();
 		for (Role r : roleList) {
-			map.put(r.getRname(), roleService.findRoleAndPrivilegeByRoleId(r));
+			List l = new ArrayList();
+			l.add(r);
+			l.add(roleService.findRoleAndPrivilegeByRoleId(r));
+			list.add(l);
 		}
 		return "findRoleAndPrivilege";
 	}
-	
+
+	/**
+	 * 根据传入的Role的rname查询该Role所拥有的权限
+	 * @param role
+	 * @return
+	 */
 	public String findRoleAndPrivilegeByRoleName() {
 		list = roleService.findRoleAndPrivilegeByRoleName(role);
 		return "findRoleAndPrivilegeByRoleName";
@@ -100,14 +107,6 @@ public class RoleAction {
 
 	public void setList(List list) {
 		this.list = list;
-	}
-
-	public Map<String, List> getMap() {
-		return map;
-	}
-
-	public void setMap(Map<String, List> map) {
-		this.map = map;
 	}
 
 	public void setRoleService(IRoleService roleService) {

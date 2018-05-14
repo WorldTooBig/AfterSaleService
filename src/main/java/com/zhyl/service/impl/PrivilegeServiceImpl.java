@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zhyl.dao.IPrivilegeDao;
 import com.zhyl.entity.Privilege;
+import com.zhyl.entity.Role;
 import com.zhyl.service.IPrivilegeService;
 
 @Service("privilegeService")
@@ -44,11 +45,14 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 
 	/**
 	 * 根据角色id查询该角色未拥有的权限
-	 * @param rno
+	 * @param role
 	 * @return
 	 */
-	public List<Privilege> findPrivilegeNoBindingListByRole(int rno) {
-		String hql = "select p.pname from RolePrivilege rp left join rp.privilege p where rp.rno = " + rno;
+	public List<Privilege> findPrivilegeNoBindingListByRole(Role role) {
+		int rno = role.getRno();
+		String hql = "select p.pno, p.pname from RolePrivilege rp right join rp.privilege p"
+				+ " where (rp.role.rno != " + rno + " or rp.role.rno is null) and p.pno not in(select rp.privilege.pno from rp where rp.role.rno = " + rno + ")"
+				+ " group by p.pno, p.pname order by p.pno";
 		return privilegeDao.queryPrivilegeHql(hql);
 	}
 

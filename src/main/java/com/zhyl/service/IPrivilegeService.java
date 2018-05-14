@@ -3,6 +3,7 @@ package com.zhyl.service;
 import java.util.List;
 
 import com.zhyl.entity.Privilege;
+import com.zhyl.entity.Role;
 
 public interface IPrivilegeService {
 
@@ -21,8 +22,8 @@ public interface IPrivilegeService {
 	
 	/**
 	 * 根据角色id查询该角色未拥有的权限
-	 * @param rno
+	 * @param role
 	 * @return
 	 */
-	public List<Privilege> findPrivilegeNoBindingListByRole(int rno);
+	public List<Privilege> findPrivilegeNoBindingListByRole(Role role);
 }

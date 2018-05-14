@@ -15,7 +15,7 @@
 			<result name="addRole" type="redirect">/pages/perSystem.jsp</result>
 			<result name="findRoleList">/pages/perSystem.jsp</result>
             <result name="findRoleAndPrivilege" type="json">
-                <param name="includeProperties">map.*</param>
+                <param name="includeProperties">list.*</param>
             </result>
             <result name="findRoleAndPrivilegeByRoleName" type="json">
                 <param name="includeProperties">list.*</param>

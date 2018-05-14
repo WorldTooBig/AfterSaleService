@@ -16,6 +16,7 @@
             <result name="findRolePrivilegeList" type="json">
                 <param name="includeProperties">list.*</param>
             </result>
+			<result name="addRolePrivilege" type="redirect">/pages/perSystem.jsp</result>
 		</action>
 	</package>
 </struts>
